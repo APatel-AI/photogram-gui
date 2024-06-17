@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   post("/add_user", {:controller => "users", :action => "create"})
   get("/users", { :controller => "users", :action => "index"})
 
+  #photos
+
+  get("/photos", { :controller => "photos", :action => "index"})
+  
 
 
 
