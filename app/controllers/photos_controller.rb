@@ -1,6 +1,4 @@
 class PhotosController < ApplicationController
-
-  
   def index
     @photos = Photo.all.order({ :created_at => :desc })
 
@@ -15,19 +13,17 @@ class PhotosController < ApplicationController
   end
 
   def create
-    @photo = User.new
-    @photo.url = params.fetch("input_image")
-    @photo.caption = params.fetch("input_caption")
-    @photo.userId = params.fetch("input_owner_id")
-
-
-    if @photo.valid?
-      @photo.save
-      redirect_to("/photos", { :notice => "photo created successfully." })
-    else
-      redirect_to("/photos", { :notice => "photo failed to create successfully." })
-    end
-
+    input_image = params.fetch("input_image")
+    input_caption = params.fetch("input_caption")
+    input_owner_id = params.fetch("input_owner_id")
+    @photo = Photo.new
+    @photo.image = input_image
+    @photo.caption = input_caption
+    @photo.owner_id = input_owner_id
+    @photo.save
+    redirect_to("/photos")
 
   end
+
+
 end

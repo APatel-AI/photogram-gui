@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   #photos
 
   get("/photos", { :controller => "photos", :action => "index"})
-  post("/insert_photo_record", { :controller => "photos", :action => "create"})
+  post("/insert_photo", {:controller => "photos", :action => "create"})
+
 
 
 
