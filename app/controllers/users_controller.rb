@@ -2,30 +2,44 @@ class UsersController < ApplicationController
 
   # display users list
   def index
-    @users = User.all.order({ :created_at => :desc })
+
+    matching_users = User.all
+    @users = matching_users.order({ :username => :asc})
 
     render({ :template => "users/index" })
   end
 
   def show
-    the_id = params.fetch("path_id")
-    @user = User.where({:id => the_id }).at(0)
+    
+    the_username = params.fetch("path_username")
+    matching_usernames = User.where({:username => the_username })
 
-    render({ :template => "users/show" })
+    @user = matching_usernames.first
+
+    if @user == nil
+      redirect_to("/users", { :notice => "Student failed to create successfully." })
+    else
+      
+      render({ :template => "users/show" })
+    end
+      
   end
 
   def create
 
-    @user = User.new
-    @user.username = params.fetch("input_username")
+    username_input = params.fetch("input_username")
+
+    new_user = User.new
+
+    new_user.username = username_input
+
+    new_user.save
+
+    redirect_to("/users/#{username_input}")
 
 
-    if @user.valid?
-      @user.save
-      redirect_to("/users", { :notice => "Student created successfully." })
-    else
-      redirect_to("/users", { :notice => "Student failed to create successfully." })
-    end
+
+   
 
 
 
